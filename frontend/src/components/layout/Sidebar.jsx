@@ -32,7 +32,7 @@ export default function Sidebar({ tab, setTab, points, rank, onOpenRewards, onSi
             <button
               key={key}
               onClick={() => setTab(key)}
-              className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition text-left"
+              className="tab-hover-side flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-left"
               style={active ? { background: BRAND.primarySoft, color: BRAND.primary } : { color: "#64748b" }}
             >
               <Icon size={18} />

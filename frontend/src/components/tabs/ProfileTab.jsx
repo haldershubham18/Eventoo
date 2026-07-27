@@ -46,7 +46,7 @@ export default function ProfileTab({ points, registeredCount, attendedCount, cer
               <button
                 key={t}
                 onClick={() => setSubTab(t)}
-                className={`px-4 py-1.5 rounded-full text-xs font-bold capitalize transition ${subTab === t ? "text-white" : "text-slate-600 bg-white border"}`}
+                className={`tab-hover-pill px-4 py-1.5 rounded-full text-xs font-bold capitalize ${subTab === t ? "text-white" : "text-slate-600 bg-white border"}`}
                 style={subTab === t ? { background: BRAND.primary } : { borderColor: BRAND.line }}
               >
                 {t === "points" ? "Points history" : t}

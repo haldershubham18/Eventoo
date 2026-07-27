@@ -50,9 +50,9 @@ export default function HomeTab({ events, points, rank, registeredIds, setCatego
                   <button
                     key={name}
                     onClick={() => setCategory(name)}
-                    className="flex flex-col items-center gap-1.5 shrink-0 active:scale-95 transition"
+                    className="tab-hover-pill flex flex-col items-center gap-1.5 shrink-0 active:scale-95"
                   >
-                    <div className={`w-14 h-14 rounded-full flex items-center justify-center ${style.bg} ${style.text}`}>
+                    <div className={`w-14 h-14 rounded-full flex items-center justify-center transition-shadow ${style.bg} ${style.text}`}>
                       <Icon size={22} />
                     </div>
                     <span className="text-[11px] font-medium text-slate-600">{name}</span>

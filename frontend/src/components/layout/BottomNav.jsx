@@ -22,7 +22,7 @@ export default function BottomNav({ tab, setTab }) {
           <button
             key={key}
             onClick={() => setTab(key)}
-            className={`flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-full transition-all active:scale-90 ${active ? "" : "text-slate-400"}`}
+            className={`tab-hover-bottom flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-full active:scale-90 ${active ? "" : "text-slate-400"}`}
             style={active ? { background: BRAND.primarySoft, color: BRAND.primary } : {}}
           >
             <Icon size={20} />
