@@ -24,7 +24,7 @@ export default function EventsTab({ events, search, setSearch, category, setCate
           <button
             key={c}
             onClick={() => setCategory(c)}
-            className={`px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition ${category === c ? "text-white" : "text-slate-600 bg-white border"}`}
+            className={`tab-hover-pill px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap ${category === c ? "text-white" : "text-slate-600 bg-white border"}`}
             style={category === c ? { background: BRAND.primary } : { borderColor: BRAND.line }}
           >
             {c}

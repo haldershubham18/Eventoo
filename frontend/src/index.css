@@ -33,3 +33,44 @@ body {
     transition-duration: 0.001ms !important;
   }
 }
+
+/* ---------- Tab hover animations ---------- */
+.tab-hover-side {
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+.tab-hover-side:hover {
+  transform: translateX(4px);
+  background: rgba(124, 58, 237, 0.08);
+}
+
+.tab-hover-bottom {
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s ease, color 0.2s ease;
+}
+.tab-hover-bottom:hover {
+  transform: translateY(-3px) scale(1.06);
+}
+
+.tab-hover-pill {
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, background-color 0.2s ease;
+}
+.tab-hover-pill:hover {
+  transform: translateY(-1px) scale(1.05);
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.18);
+}
+
+/* ---------- Native hand cursor on hover ---------- */
+a,
+button,
+[role="button"],
+.tab-hover-side,
+.tab-hover-bottom,
+.tab-hover-pill,
+select,
+label[for] {
+  cursor: pointer;
+}
+
+input,
+textarea {
+  cursor: text;
+}

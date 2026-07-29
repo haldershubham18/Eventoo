@@ -1,10 +1,13 @@
 import React from "react";
 import { Trophy, ChevronRight, Award, User, Bell, Settings, HelpCircle, LogOut } from "lucide-react";
-import { BRAND } from "../../data/seed";
+import { BRAND, initials } from "../../data/seed";
 import { IconCircle } from "../ui/Primitives";
 import { StatBlock, EmptyState, SettingsRow } from "../ui/Blocks";
 
-export default function ProfileTab({ points, registeredCount, attendedCount, certificates, pointsLog, subTab, setSubTab, onOpenCert, onOpenRewards, onSignOut }) {
+export default function ProfileTab({ user, points, registeredCount, attendedCount, certificates, pointsLog, subTab, setSubTab, onOpenCert, onOpenRewards, onSignOut }) {
+  const displayName = user?.name || "Jordan Rivera";
+  const displayInitials = initials(displayName);
+
   return (
     <div className="px-4 lg:px-8 pt-4 lg:pt-8 pb-6">
       <div className="lg:grid lg:grid-cols-[280px_1fr] lg:gap-8 lg:items-start">
@@ -12,10 +15,10 @@ export default function ProfileTab({ points, registeredCount, attendedCount, cer
         <div className="space-y-5">
           <div className="rounded-3xl p-6 flex flex-col items-center text-center" style={{ background: BRAND.paperDim }}>
             <div className="w-20 h-20 rounded-full flex items-center justify-center text-white text-2xl font-extrabold shadow-lg" style={{ background: `linear-gradient(135deg, ${BRAND.primary}, ${BRAND.magenta})` }}>
-              JR
+              {displayInitials}
             </div>
-            <h2 className="font-extrabold text-lg mt-3 font-display" style={{ color: BRAND.ink }}>Jordan Rivera</h2>
-            <p className="text-xs text-slate-400 font-semibold tracking-wide">ID: 2024-CC-8819</p>
+            <h2 className="font-extrabold text-lg mt-3 font-display" style={{ color: BRAND.ink }}>{displayName}</h2>
+            <p className="text-xs text-slate-400 font-semibold tracking-wide">{user?.email || "ID: 2024-CC-8819"}</p>
           </div>
 
           <div className="grid grid-cols-3 gap-3">
@@ -46,7 +49,7 @@ export default function ProfileTab({ points, registeredCount, attendedCount, cer
               <button
                 key={t}
                 onClick={() => setSubTab(t)}
-                className={`px-4 py-1.5 rounded-full text-xs font-bold capitalize transition ${subTab === t ? "text-white" : "text-slate-600 bg-white border"}`}
+                className={`tab-hover-pill px-4 py-1.5 rounded-full text-xs font-bold capitalize ${subTab === t ? "text-white" : "text-slate-600 bg-white border"}`}
                 style={subTab === t ? { background: BRAND.primary } : { borderColor: BRAND.line }}
               >
                 {t === "points" ? "Points history" : t}

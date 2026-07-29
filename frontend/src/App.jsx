@@ -18,7 +18,13 @@ import RewardsOverlay from "./components/overlays/RewardsOverlay";
 import AddCertOverlay from "./components/overlays/AddCertOverlay";
 import CertDetailOverlay from "./components/overlays/CertDetailOverlay";
 
+import LoginPage from "./components/auth/LoginPage";
+import SignUpPage from "./components/auth/SignUpPage";
+import { getCurrentUser, logoutUser } from "./lib/auth";
+
 export default function CampusConnectApp() {
+  const [user, setUser] = useState(() => getCurrentUser());
+  const [authView, setAuthView] = useState("login"); // "login" | "signup"
   const [tab, setTab] = useState("home");
   const [events, setEvents] = useState(SEED_EVENTS);
   const [registeredIds, setRegisteredIds] = useState(["ai-ethics"]);
@@ -115,12 +121,34 @@ export default function CampusConnectApp() {
 
   function signOut() {
     if (!window.confirm("Sign out of CampusConnect?")) return;
+    logoutUser();
+    setUser(null);
+    setAuthView("login");
     setTab("home");
     setRegisteredIds([]);
     setAttendedIds([]);
     setCertificates([]);
     setPointsLog([{ label: "Welcome bonus", points: 50, date: "Sep 1" }]);
     showToast("Signed out");
+  }
+
+  // Gate the app behind auth. Both pages share the same brand shell,
+  // styling, and validation approach as the rest of the product.
+  if (!user) {
+    return authView === "signup" ? (
+      <SignUpPage
+        onSignUp={(session) => {
+          setUser(session);
+          setAuthView("login");
+        }}
+        onNavigateLogin={() => setAuthView("login")}
+      />
+    ) : (
+      <LoginPage
+        onLogin={(session) => setUser(session)}
+        onNavigateSignUp={() => setAuthView("signup")}
+      />
+    );
   }
 
   return (
@@ -139,7 +167,7 @@ export default function CampusConnectApp() {
           className="relative flex-1 flex flex-col min-h-screen w-full max-w-[460px] lg:max-w-none mx-auto lg:mx-0 shadow-2xl lg:shadow-none"
           style={{ background: BRAND.paper }}
         >
-          <Header onSearchClick={() => setTab("events")} />
+          <Header onSearchClick={() => setTab("events")} name={user.name?.split(" ")[0] || "there"} />
 
           <main className="flex-1 overflow-y-auto pb-24 lg:pb-8 w-full lg:max-w-6xl lg:mx-auto" style={{ WebkitOverflowScrolling: "touch" }}>
             {tab === "home" && (
@@ -189,6 +217,7 @@ export default function CampusConnectApp() {
 
             {tab === "profile" && (
               <ProfileTab
+                user={user}
                 points={points}
                 registeredCount={registeredIds.length}
                 attendedCount={attendedIds.length}
