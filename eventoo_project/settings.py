@@ -1,11 +1,26 @@
 from datetime import timedelta
 from pathlib import Path
+
 from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config('SECRET_KEY')
-DEBUG = config('DEBUG', default=False, cast=bool)
+
+
+def _read_bool_setting(name, default=False):
+    value = config(name, default=None)
+    if value is None:
+        return default
+    normalized = str(value).strip().lower()
+    if normalized in {'1', 'true', 'yes', 'on'}:
+        return True
+    if normalized in {'0', 'false', 'no', 'off'}:
+        return False
+    return default
+
+
+DEBUG = _read_bool_setting('DEBUG', default=False)
 ALLOWED_HOSTS = ['*']
 
 # ─── APPS ───────────────────────────────────────────────────────────────────
@@ -64,7 +79,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'eventoo_project.wsgi.application'
 
-# ─── DATABASE (MySQL) ────────────────────────────────────────────────────────
+# ─── DATABASE (local MySQL) ────────────────────────────────────────────────
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -128,7 +143,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
 APSCHEDULER_RUN_NOW_TIMEOUT = 25
 
-CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
